@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html manifest="default.appcache">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="js/libs/jquery-mobile/jquery.mobile.min.css" />
+        <link rel="stylesheet" href="css/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <meta name="msapplication-tap-highlight" content="yes" />
+        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
+        <script>
+		    
+        	$(function(){
+        		document.addEventListener("deviceready", function(){ 
+				     Keyboard.hideFormAccessoryBar(true);
+				});
+        		var onSuccess = function(position) {
+					sessionStorage.lat=position.coords.latitude;
+					sessionStorage.lng=position.coords.longitude;
+					
+					if (localStorage["login"]!=undefined){
+						sessionStorage.login_app=localStorage["login"];
+						sessionStorage.meter=localStorage["meter"];
+						window.location.replace("app.html");
+					}
+				    /*
+				alert('Latitude: '          + position.coords.latitude          + '\n' +
+				          'Longitude: '         + position.coords.longitude         + '\n' +
+				          'Altitude: '          + position.coords.altitude          + '\n' +
+				          'Accuracy: '          + position.coords.accuracy          + '\n' +
+				          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+				          'Heading: '           + position.coords.heading           + '\n' +
+				          'Speed: '             + position.coords.speed             + '\n' +
+				          'Timestamp: '         + position.timestamp                + '\n');
+				*/
+				}
+			
+				// onError Callback receives a PositionError object
+				//
+				function onError(error) {
+				    alert('code: '    + error.code    + '\n' +
+				          'message: ' + error.message + '\n');
+				}
+				if (sessionStorage.logout!='yes'){
+	        		navigator.geolocation.getCurrentPosition(onSuccess, onError);
+	        	}
+        	});
+        </script>
+        <title>Scobur</title>
+    </head>
+    <body>
+    	<div class="top" data-position="fixed">
+	        <a href="#" data-rel="back"><img src="./img/back.png" class="back" style="visibility:hidden"></a>
+	        <img src="./img/small_logo.png" class="small_logo">
+        </div>
+    	<div class="selectExp">
+    		<h2>Select Expertise</h2>
+	    	<input type="checkbox" value="BUILDER" style="margin-left:8%"> BUILDER
+	    	<div class="clearfix;" style="margin-bottom:5px"></div>
+	    	<input type="checkbox" value="PLUMBER" style="margin-left:8%"> PLUMBER
+	    	<div class="clearfix" style="margin-bottom:5px"></div>
+	    	<input type="checkbox" value="HANDY MAN" style="margin-left:8%"> HANDY MAN
+	    	<div class="clearfix" style="margin-bottom:5px"></div>
+	    	<input type="checkbox" value="PAINTER" style="margin-left:8%"> PAINTER
+	    	<h3 id="saveExp">Save</h3>
+    	</div>
+    	<div class="refa"><i class="fa fa-refresh fa-spin fa-5x fa-inverse"></i></div>
+    	<!-- стартова сторінка -->
+        <div data-role="page" id="start">
+	        <img src="./img/1.png" class="logo">
+	        
+	        <div class="action_button">
+		        <a href="#login" class="sign" data-transition="slide">Login</a>
+		        <a href="#register" class="sign" data-transition="slide">Sign up</a>
+	        </div>
+        </div>
+        
+        <!-- реєстрація - шаг 1 -->
+        <div data-role="page" id="register">
+	        <div class="white_bg">ACCOUNT TYPE</div>
+	        
+	        <div class="action_button">
+		        <a href="#register_step_2" data-transition="slide" onclick="sessionStorage.type_user=1" class="type_user_button">
+		        	<span class="yelow">CUSTOMER</span>
+		        	<span></span>
+		        </a>
+		        <a href="#register_step_2" data-transition="slide" onclick="sessionStorage.type_user=2" class="type_user_button" data-transition="slide">
+		        	<span>PROFESSIONAL</span>
+		        	<span></span>
+		        </a>
+	        </div>
+        </div>
+        
+        <!-- реєстрація - шаг 2 -->
+        <div data-role="page" id="register_step_2">
+	       
+	        <div class="white_bg">LOGIN INFO</div>
+	        
+	        <div class="form">
+		        <input type="text" placeholder="Enter login" id="login_user">
+		        <input type="password" placeholder="Enter password" id="pass_user">
+		        <input type="password" placeholder="Repeat password" id="pass_user_2">
+	        </div>
+	        
+	        <div class="footer_button yelow" id="step2">Next</div>
+        </div>
+        
+        <!-- реєстрація - шаг 3 -->
+        <div data-role="page" id="register_step_3">
+	        
+	        <div class="form small_input">
+		        <input type="text" placeholder="Expertise" id="Expertise">
+		        <input type="text" placeholder="Tagline" id="Tagline"><label>optional</label>
+		        <input type="text" placeholder="Business name" id="Business_name">
+		        <input type="text" placeholder="Own name" id="Own_name"><label>optional</label>
+		        <input type="text" placeholder="Areas covered" id="Areas_covered">
+		        <input type="text" placeholder="Working hours" id="Working_hours">
+		        <input type="text" placeholder="GPS radius" id="GPS_radius">
+	        </div>
+	        
+	        <div class="footer_button yelow" id="step3">Next</div>
+        </div>
+        
+        <!-- реєстрація - шаг 3-1 -->
+        <div data-role="page" id="register_step_3_1">
+	        
+	        <div class="form small_input" style="top:80px">
+	        	<form action="http://zonar.co/Zonar/load_photo.php" method="post" target="load_photo" enctype="multipart/form-data">
+	        		<div class="div_file">
+		        		<input type="file" name="file" id="file_2">
+		        		<div class="nophoto" data-role="img_1"></div>
+		        		<span>Profile Image</span>
+	        		</div>
+	        	</form>
+	        	<iframe style="display:none" name="load_photo" id="load_photo"></iframe>
+    			<script>
+    				$("#load_photo").load(function(){
+    					var th=$(this).contents().find('body').html();
+    					if (th!=''){
+    						$(".refa").fadeOut();
+    						var res=JSON.parse(th);
+    							if (res[0].status==1){
+	    							$(".nophoto").css({'background':'url(http://zonar.co/Zonar/photo/'+res[0].img+')', 'background-size':'cover', 'background-position':'left top', 'background-repeat':'no-repeat'}).attr('data-img',res[0].img);
+    							} else {
+	    							navigator.notification.alert(
+									    'Photo load fail',  // message
+									    alertDismissed,         // callback
+									    'Error',            // title
+									    'Done'                  // buttonName
+									);
+    							}
+    					}
+    				});
+    			</script>
+    			<div style="clear:both;margin-bottom:20px"></div>
+		        <input type="text" placeholder="Name" id="Name">
+		        <input type="text" placeholder="Area" id="Area">
+		        <input type="text" placeholder="Phone number" id="Phone_number"><label>optional</label>
+		        <input type="text" placeholder="Other" id="Other"><label>optional</label>
+	        </div>
+	        
+	        <div class="footer_button yelow" id="final_1">Register&Save</div>
+        </div>
+        
+        <!-- реєстрація - шаг 4 -->
+        <div data-role="page" id="register_step_4">
+	        
+	        <div class="form small_input" style="top:80px">
+	        	<form action="http://zonar.co/Zonar/load_photo.php" method="post" target="load_photo" enctype="multipart/form-data">
+	        		<div class="div_file">
+		        		<input type="file" name="file" id="file">
+		        		<div class="nophoto" data-role="img_2"></div>
+		        		<span>Profile Image</span>
+	        		</div>
+	        	</form>
+	        	<iframe style="display:none" name="load_photo" id="load_photo"></iframe>
+    			<script>
+    				$("#load_photo").load(function(){
+    					var th=$(this).contents().find('body').html();
+    					if (th!=''){
+    						$(".refa").fadeOut();
+    						var res=JSON.parse(th);
+    							if (res[0].status==1){
+	    							$(".nophoto").css({'background':'url(http://zonar.co/Zonar/photo/'+res[0].img+')', 'background-size':'cover', 'background-position':'left top', 'background-repeat':'no-repeat'}).attr('data-img',res[0].img);
+    							} else {
+	    							navigator.notification.alert(
+									    'Photo load fail',  // message
+									    alertDismissed,         // callback
+									    'Error',            // title
+									    'Done'                  // buttonName
+									);
+    							}
+    					}
+    				});
+    			</script>
+    			<div style="clear:both;margin-bottom:20px"></div>
+		        <input type="text" placeholder="Qualification" id="Qualification">
+		       <form action="http://zonar.co/Zonar/load_ser.php" method="post" target="load_ser" enctype="multipart/form-data">
+	        		<div class="div_ser">
+		        		<input type="file" name="file" id="file_ser">
+		        		<span>certificate photos</span>
+	        		</div>
+	        	</form>
+	        	<iframe style="display:none" name="load_ser" id="load_ser"></iframe>
+    			<script>
+    				$("#load_ser").load(function(){
+    					var th=$(this).contents().find('body').html();
+    					if (th!=''){
+    						$(".refa").fadeOut();
+    						$("#file_ser").val();
+    						var res=JSON.parse(th);
+    							if (res[0].status==1){
+	    							$("#rez_ser").append('<div class="one_us" style="background:url(http://zonar.co/Zonar/нsertificat/'+res[0].img+');background-size:cover;background-position:center center" data-img="'+res[0].img+'"></div>');
+    							} else {
+	    							navigator.notification.alert(
+									    'Photo load fail',  // message
+									    alertDismissed,         // callback
+									    'Error',            // title
+									    'Done'                  // buttonName
+									);
+    							}
+    					}
+    				});
+    			</script>
+    			<div id="rez_ser" class="clearfix">
+    				
+    			</div>
+	        </div>
+	        
+	        <div class="footer_button yelow" id="final_2">Register&Save</div>
+        </div>
+        
+        <!-- вхід -->
+        <div data-role="page" id="login">
+	        <div class="white_bg">LOGIN</div>
+	        
+	        <div class="form">
+		        <input type="text" placeholder="Login" id="login_login">
+		        <input type="password" placeholder="Password" id="pass_login">
+		        <br><br>
+		        <input type="checkbox" value="1" id="member" style="width:20px;height:20px"><span style="font-size:2em;display:block;margin-top:-10px;color:white;margin-left:10%">Remember me</span>
+	        </div>
+	        
+	        <div class="action_button">
+		        <a href="#" class="type_user_button" id="login_app">
+		        	<span class="yelow">LOGIN</span>
+		        	<span></span>
+		        </a>
+	        </div>
+        </div>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/libs/jquery-mobile/jquery.mobile.min.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/keyboard.js"></script>
+        <script type="text/javascript" src="js/my.js"></script>
+        
+        <script type="text/javascript">
+        	cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        	alert(111);
+            app.initialize();
+        </script>
+    </body>
+</html>

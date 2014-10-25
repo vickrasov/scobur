@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html manifest="default.appcache">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="js/libs/jquery-mobile/jquery.mobile.min.css" />
+        <link rel="stylesheet" href="css/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
+         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+        <meta name="msapplication-tap-highlight" content="yes" />
+        <title>Scobur</title>
+    </head>
+    <body>
+    	<div class="selectExp">
+    		<h2>Select Expertise</h2>
+	    	<input type="checkbox" value="BUILDER" style="margin-left:8%"> BUILDER
+	    	<div class="clearfix;" style="margin-bottom:5px"></div>
+	    	<input type="checkbox" value="PLUMBER" style="margin-left:8%"> PLUMBER
+	    	<div class="clearfix" style="margin-bottom:5px"></div>
+	    	<input type="checkbox" value="HANDY MAN" style="margin-left:8%"> HANDY MAN
+	    	<div class="clearfix" style="margin-bottom:5px"></div>
+	    	<input type="checkbox" value="PAINTER" style="margin-left:8%"> PAINTER
+	    	<h3 id="saveExp">Save</h3>
+    	</div>
+    	<div class="top">
+	        <a href="#" data-rel="back"><img src="./img/back.png" class="back" style="visibility:hidden"></a>
+	        <a href="app.html" data-transition="slide"><img src="./img/small_logo.png" class="small_logo"></a>
+	        
+	        <a href="#settings" data-transition="slide"><img src="./img/ic3.png" class="ico ico3"></a>
+	        <a href="#map" data-transition="slide"><img src="./img/ic2.png" class="ico ico2"></a>
+	        <a href="#" class="nene" data-role="count_new_sms">
+	        	<img src="./img/ic1.png" class="ico ico1">
+	        	<span>0</span>
+	        </a>
+        </div>
+    	<div class="refa"><i class="fa fa-refresh fa-spin fa-5x fa-inverse"></i></div>
+        <div data-role="page" id="app">
+	        <div class="category_button">
+		        <a href="#" data-transition="slide" data-role="select_category_user" class="cat_button" data-id="1">
+		        	<span>BUILDER</span>
+		        	<span></span>
+		        </a>
+		        <a href="#" data-transition="slide" data-role="select_category_user" class="cat_button" data-id="2">
+		        	<span>PLUMBER</span>
+		        	<span></span>
+		        </a>
+		        <a href="#" data-transition="slide" data-role="select_category_user" class="cat_button" data-id="3">
+		        	<span>HANDY MAN</span>
+		        	<span></span>
+		        </a>
+		        <a href="#" data-transition="slide" data-role="select_category_user" class="cat_button" data-id="4">
+		        	<span>PAINTER</span>
+		        	<span></span>
+		        </a>
+	        </div>
+        </div>
+        
+        <div data-role="page" id="all">
+	        <div class="body_page clearfix">
+	        	<div class="menu_hover">
+	        		<ul>
+	        			<li><input type="checkbox" class="checkedCategory" value="1"> BUILDER</li>
+	        			<div style="clear:both"></div>
+	        			<li><input type="checkbox" class="checkedCategory" value="2">PLUMBER</li>
+	        			<div style="clear:both"></div>
+	        			<li><input type="checkbox" class="checkedCategory" value="3">HANDY MAN</li>
+	        			<div style="clear:both"></div>
+	        			<li><input type="checkbox" class="checkedCategory" value="4">PAINTER</li>
+	        			<div style="clear:both"></div>
+	        			<li style="padding-left:0.3em;margin-top:10px" id="showSelectCategory">Show</li>
+	        		</ul>
+	        	</div>
+	        	<img src="./img/grid.png" class="menu" data-role="0">
+		        <div id="responce_user_load" class="clearfix">
+					
+		        </div>
+	        </div>
+        </div>
+        
+        <div data-role="page" id="one_user">
+	        <div class="page_one_user">
+	        	<a href="#" id="info_user_more" data-stan="0">
+			        <div class="info_user">
+				        <div class="title_info_user"></div>
+				        <p></p>
+				        <p></p>
+				        <p></p>
+				        <p></p>
+				        <p></p>
+				        <hr>
+				        <p></p>
+			        </div>
+	        	</a>
+	        </div>
+	        
+	        <div class="footer_button yelow" id="smsChat">Message</div>
+        </div>
+        
+        <!-- sertificat -->
+        <div data-role="page" id="gallery_sertificat">
+	        <div class="body_page clearfix">
+		        
+	        </div>
+        </div>
+        
+        <!-- chat -->
+        <div data-role="page" id="chat">
+	        <div class="page_one_user" id="bodyChat">
+	        	
+	        </div>
+	        
+	        <div class="footer_button yelow" style="height:50px" id="poleSend">
+		        <form action="http://zonar.co/Zonar/addFile.php" method="post" target="sendFile" enctype="multipart/form-data">
+		        	<div class="addFileBlock">
+		        		<input type="file" name="file" id="fileSend">
+		        		<i class="fa fa-camera fa-inverse" id="addFile"></i>
+		        	</div>
+		        </form>
+		        <iframe style="display:none" name="sendFile" id="sendFile"></iframe>
+    			<script>
+    				$("#sendFile").load(function(){
+    					var th=$(this).contents().find('body').html();
+    					if (th!=''){
+    						$(".refa").fadeOut();
+    						$("#file_ser").val();
+    						var res=JSON.parse(th);
+    							if (res[0].status==1){
+    								var imgg=res[0].img;
+    								//+++
+	    							$.post("http://zonar.co/Zonar/textChat.php", {uset_to:sessionStorage.login_app, user_from:sessionStorage.chatUser, text:'<a href="http://zonar.co/Zonar/sms/'+imgg+'" data-role="download"><img src="http://zonar.co/Zonar/sms/'+res[0].img+'" style="width:50%"></a>', srt:sessionStorage.max_srt}, function(res){
+										$("#bodyChat").append('<div class="dialog_to" data-srt="'+sessionStorage.max_srt+'"><span><a href="http://zonar.co/Zonar/sms/'+imgg+'" data-role="download"><img src="http://zonar.co/Zonar/sms/'+imgg+'" style="width:50%"></a></span><span class="dataChat">now <i class="fa fa-check fa-inverse"></i></span><img class="pin" src="./img/chat_orang.png"></div>');
+										//$("#textChat").val('');
+										sessionStorage.max_srt++;
+										setTimeout(function(){
+											$("#bodyChat").animate({scrollTop: 99999}, 1000);
+										}, 1000);
+									});
+    							} else {
+	    							navigator.notification.alert(
+									    'Photo load fail',  // message
+									    alertDismissed,         // callback
+									    'Error',            // title
+									    'Done'                  // buttonName
+									);
+    							}
+    					}
+    				});
+    			</script>
+		        <input type="text" id="textChat" maxlength="255">
+		        <a href="#" class="send" id="sendChat">SEND</a>
+	        </div>
+        </div>
+        
+        
+        <!-- main chat -->
+        <div data-role="page" id="main_chat">
+	        <div class="page_chat" id="mainChat">
+	        	
+	        </div>
+	        
+        </div>
+        
+        <!-- map -->
+        <div data-role="page" id="map">
+	        <div class="top">
+		        <a href="#" data-rel="back"><img src="./img/back.png" class="back"></a>
+		        <img src="./img/small_logo.png" class="small_logo">
+		        
+		        <a href="#settings" data-transition="slide"><img src="./img/ic3.png" class="ico ico3"></a>
+		        <a href="#map" data-transition="slide"><img src="./img/ic2.png" class="ico ico2"></a>
+		        <a href="#" class="nene" data-role="count_new_sms">
+		        	<img src="./img/ic1.png" class="ico ico1">
+		        	<span>0</span>
+		        </a>		        
+	        </div>
+	        
+	        <div class="page_chat">
+	        	<div id="map_canvas" style="width:100%; height:100%"></div>
+	        	<div id="dist"></div>
+	        	<div class="search_block">
+	        		<a href="#" id="map_center"><img src="./img/my.png"></a>
+	        		<img src="./img/search.png" id="search_button">
+	        		<input type="text" class="search_user" id="search_text">
+	        	</div>
+	        </div>
+	        
+        </div>
+        
+        <!-- settings -->
+        <div data-role="page" id="settings">
+	        <div class="white_bg">SETTINGS</div>
+	        
+	        <div class="page_setting">
+	        	<a href="#" class="white_url" data-transition="slide" id="editUserProfile">Edit Profile</a>
+	        	<a href="#prefer" data-transition="slide" class="black_url">Preferences</a>
+	        	<!-- <a href="#" class="white_url">Renew Subscription</a> -->
+	        	
+	        	<a href="#invite" class="black_url">Tell a Friend</a>
+	        	<a href="#" class="black_url">FAQs/Support</a>
+	        	<a href="#" id="logout" class="black_url">Logout</a>
+	        </div>
+	        
+	        <div class="footer_button">
+		        <img src="./img/soc1.png" class="social_icon">
+		        <img src="./img/soc2.png" class="social_icon">
+		        <img src="./img/soc3.png" class="social_icon">
+	        </div>
+        </div>
+        
+         <!-- preference -->
+        <div data-role="page" id="prefer">
+		        <div class="white_bg">SETTINGS</div>
+	        
+	        <div class="page_setting">
+	        	<a href="#" class="white_url" data-transition="slide" id="editUserProfile" style="background:url(./img/prosto_white.png)">UNITS</a>
+	        	<a href="#" class="black_url" style="background:url(./img/button.png)">
+	        		<span data-role="selectMetrik" data-meter="metric">Metrics</span> /
+	        		<span data-role="selectMetrik" data-meter="imperial">Imperial</span>
+	        	</a>
+	        	<a href="#" class="white_url" style="background:url(./img/prosto_white.png)">CHAT</a>
+	        	<a href="#" class="black_url" style="margin-top:0">Unblock all</a>
+	        	<a href="#" class="black_url" id="clearAllChat">Clear chat</a>
+	        </div>
+	        
+	        <div class="footer_button">
+		        <img src="./img/soc1.png" class="social_icon">
+		        <img src="./img/soc2.png" class="social_icon">
+		        <img src="./img/soc3.png" class="social_icon">
+	        </div>
+        </div>
+        
+        <!-- edit profile -->
+        <div data-role="page" id="edit_profile_one">
+	        
+	        <div class="form small_input" style="top:80px">
+	        	<form action="http://zonar.co/Zonar/load_photo.php" method="post" target="load_photo" enctype="multipart/form-data">
+	        		<div class="div_file">
+		        		<input type="file" name="file" id="file_2">
+		        		<div class="nophoto" data-role="img_1"></div>
+		        		<span>Profile Image</span>
+	        		</div>
+	        	</form>
+	        	<iframe style="display:none" name="load_photo" id="load_photo"></iframe>
+    			<script>
+    				$("#load_photo").load(function(){
+    					var th=$(this).contents().find('body').html();
+    					if (th!=''){
+    						$(".refa").fadeOut();
+    						var res=JSON.parse(th);
+    							if (res[0].status==1){
+	    							$(".nophoto").css({'background':'url(http://zonar.co/Zonar/photo/'+res[0].img+')', 'background-size':'cover', 'background-position':'left top', 'background-repeat':'no-repeat'}).attr('data-img',res[0].img);
+    							} else {
+	    							navigator.notification.alert(
+									    'Photo load fail',  // message
+									    alertDismissed,         // callback
+									    'Error',            // title
+									    'Done'                  // buttonName
+									);
+    							}
+    					}
+    				});
+    			</script>
+    			<div style="clear:both;margin-bottom:20px"></div>
+		        <input type="text" placeholder="Name" id="Name">
+		        <input type="text" placeholder="Area" id="Area">
+		        <input type="text" placeholder="Phone number" id="Phone_number"><label>optional</label>
+		        <input type="text" placeholder="Other" id="Other"><label>optional</label>
+	        </div>
+	        
+	        <div class="footer_button yelow" id="save_profile_1">Save</div>
+        </div>
+        
+        <!-- edit profile -->
+        <div data-role="page" id="edit_profile_two">	        
+	        
+	        <div class="form small_input">
+		        <input type="text" placeholder="Expertise" id="Expertise">
+		        <input type="text" placeholder="Tagline" id="Tagline"><label>optional</label>
+		        <input type="text" placeholder="Business name" id="Business_name">
+		        <input type="text" placeholder="Own name" id="Own_name"><label>optional</label>
+		        <input type="text" placeholder="Areas covered" id="Areas_covered">
+		        <input type="text" placeholder="Working hours" id="Working_hours">
+		        <input type="text" placeholder="GPS radius" id="GPS_radius">
+	        </div>
+	        
+	        <a href="#edit_profile_two_2" data-transition="slide"><div class="footer_button yelow">Next</div></a>
+        </div>
+        
+        <!-- edit profile 2 -->
+        <div data-role="page" id="edit_profile_two_2">
+	        
+	       <div class="form small_input" style="top:80px">
+	        	<form action="http://zonar.co/Zonar/load_photo.php" method="post" target="load_photo" enctype="multipart/form-data">
+	        		<div class="div_file">
+		        		<input type="file" name="file" id="file">
+		        		<div class="nophoto" data-role="img_2"></div>
+		        		<span>Profile Image</span>
+	        		</div>
+	        	</form>
+	        	<iframe style="display:none" name="load_photo" id="load_photo"></iframe>
+    			<script>
+    				$("#load_photo").load(function(){
+    					var th=$(this).contents().find('body').html();
+    					if (th!=''){
+    						$(".refa").fadeOut();
+    						var res=JSON.parse(th);
+    							if (res[0].status==1){
+	    							$(".nophoto").css({'background':'url(http://zonar.co/Zonar/photo/'+res[0].img+')', 'background-size':'cover', 'background-position':'left top', 'background-repeat':'no-repeat'}).attr('data-img',res[0].img);
+    							} else {
+	    							navigator.notification.alert(
+									    'Photo load fail',  // message
+									    alertDismissed,         // callback
+									    'Error',            // title
+									    'Done'                  // buttonName
+									);
+    							}
+    					}
+    				});
+    			</script>
+    			<div style="clear:both;margin-bottom:20px"></div>
+		        <input type="text" placeholder="Qualification" id="Qualification">
+		       <form action="http://zonar.co/Zonar/load_ser.php" method="post" target="load_ser" enctype="multipart/form-data">
+	        		<div class="div_ser">
+		        		<input type="file" name="file" id="file_ser">
+		        		<span>certificate photos</span>
+	        		</div>
+	        	</form>
+	        	<iframe style="display:none" name="load_ser" id="load_ser"></iframe>
+    			<script>
+    				$("#load_ser").load(function(){
+    					var th=$(this).contents().find('body').html();
+    					if (th!=''){
+    						$(".refa").fadeOut();
+    						$("#file_ser").val();
+    						var res=JSON.parse(th);
+    							if (res[0].status==1){
+	    							$("#rez_ser").append('<div class="one_us" style="background:url(http://zonar.co/Zonar/sertificat/'+res[0].img+');background-size:cover;background-position:center center" data-img="'+res[0].img+'"></div>');
+    							} else {
+	    							navigator.notification.alert(
+									    'Photo load fail',  // message
+									    alertDismissed,         // callback
+									    'Error',            // title
+									    'Done'                  // buttonName
+									);
+    							}
+    					}
+    				});
+    			</script>
+    			<div id="rez_ser" class="clearfix">
+    				
+    			</div>
+	        </div>
+	        
+	        <div class="footer_button yelow" id="save_profile_2">Save</div>
+        </div>
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/libs/jquery-mobile/jquery.mobile.min.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/my.js"></script>
+        <script>
+	        $(function(){
+		        /*
+setTimeout(function(){
+		        	initialize(sessionStorage.lat, sessionStorage.lng);
+		        }, 5000);
+*/
+				//initialize(sessionStorage.lat, sessionStorage.lng);
+	        });
+        </script>
+        <script type="text/javascript">
+            //app.initialize();
+        </script>
+    </body>
+</html>
